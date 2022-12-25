@@ -1,7 +1,6 @@
 package hw03frequencyanalysis
 
 import (
-	"regexp"
 	"sort"
 	"strings"
 )
@@ -11,13 +10,6 @@ type WordCountStruct struct {
 	count uint
 }
 
-// Firs part: only letter and digits,
-// Second part: NOT white space symbols and not control symbol except "-".
-var (
-	wordRegex    = `([А-Яа-яA-Za-z0-9]+[^\s,.:;'"!?+=/\\)(\[\]]*)`
-	uniqWordExpr = regexp.MustCompile(wordRegex)
-)
-
 func Top10(inputString string) []string {
 	inputStringSlice := strings.Fields(inputString)
 
@@ -25,7 +17,7 @@ func Top10(inputString string) []string {
 	wordCountMap := make(map[string]int, len(inputStringSlice))
 
 	for _, rawWord := range inputStringSlice {
-		uniqWord := uniqWordExpr.FindString(strings.ToLower(rawWord))
+		uniqWord := strings.Trim(strings.ToLower(rawWord), "'.,:;?!-")
 
 		if uniqWord != "" {
 			_, found := wordCountMap[uniqWord]
