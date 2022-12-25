@@ -28,9 +28,9 @@ func Top10(inputString string) []string {
 		uniqWord := uniqWordExpr.FindString(strings.ToLower(rawWord))
 
 		if uniqWord != "" {
-			value, found := wordCountMap[uniqWord]
+			_, found := wordCountMap[uniqWord]
 			if found {
-				wordCountMap[uniqWord] = value + 1
+				wordCountMap[uniqWord]++
 			} else {
 				wordCountMap[uniqWord] = 1
 			}
