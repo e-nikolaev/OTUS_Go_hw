@@ -7,7 +7,7 @@ import (
 )
 
 // Change to true if needed.
-var taskWithAsteriskIsCompleted = false
+var taskWithAsteriskIsCompleted = true
 
 var text = `Как видите, он  спускается  по  лестнице  вслед  за  своим
 	другом   Кристофером   Робином,   головой   вниз,  пересчитывая
@@ -77,6 +77,65 @@ func TestTop10(t *testing.T) {
 				"то",        // 4
 			}
 			require.Equal(t, expected, Top10(text))
+		}
+	})
+
+	// Custom test cases for taskWithAsteriskIsCompleted
+	testCases := []struct {
+		description string
+		text        string
+		expected    []string
+	}{
+		{
+			description: "English text, more then 10",
+			text:        `aa ab ac ac ad ae ae ae af ag ah ai aj ak a-l`,
+			expected:    []string{"ae", "ac", "a-l", "aa", "ab", "ad", "af", "ag", "ah", "ai"},
+		},
+		{
+			description: "English text, less then 10",
+			text:        `London is the capital of Great Britain. Moscow is the capital of Russia`,
+			expected:    []string{"capital", "is", "of", "the", "britain", "great", "london", "moscow", "russia"},
+		},
+		{
+			description: "One word",
+			text:        `abc`,
+			expected:    []string{"abc"},
+		},
+		{
+			description: "One word with -",
+			text:        `abc-abc`,
+			expected:    []string{"abc-abc"},
+		},
+		{
+			description: "Point",
+			text:        `.`,
+			expected:    []string{},
+		},
+		{
+			description: "Point with spaces",
+			text:        `   .   `,
+			expected:    []string{},
+		},
+		{
+			description: "Digits",
+			text:        `1 2 3 4 5 6 7 8 9 10 11 12`,
+			expected:    []string{"1", "10", "11", "12", "2", "3", "4", "5", "6", "7"},
+		},
+		{
+			description: "Dash is not word",
+			text:        `abc - abc`,
+			expected:    []string{"abc"},
+		},
+		{
+			description: "Hyphen is part word",
+			text:        `abc-abc`,
+			expected:    []string{"abc-abc"},
+		},
+	}
+
+	t.Run("custom tests", func(t *testing.T) {
+		for _, tc := range testCases {
+			require.Equal(t, tc.expected, Top10(tc.text))
 		}
 	})
 }
