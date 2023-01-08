@@ -1,4 +1,4 @@
-module github.com/fixme_my_friend/hw04_lru_cache
+module github.com/e-nikolaev/OTUS_Go_hw/hw04_lru_cache
 
 go 1.19
 
